@@ -10,14 +10,14 @@
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 
 <!-- Header Section Begin -->
-<header style="position:fixed;width:100%;z-index: 100000;" class="header">
+<header style="position:fixed;width:100%;z-index: 100000;top: 0" class="header">
     <div class="header__top">
         <div class="container">
             <div class="row">
                 <div class="col-lg-5 col-md-7">
                     <div class="header__top__left">
                         <p> <sec:authorize access="isAuthenticated()">
-                                Authenticated as 
+                                Authenticated as
                                 <sec:authentication property="principal.username"/>
                             </sec:authorize>
                         </p>
@@ -28,7 +28,7 @@
                     <div style=""class="header__top__right">
                         <div class="header__top__links">
                             <sec:authorize access="isAuthenticated()">
-                                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                <sec:authorize access="hasRole('ROLE_ADMIN')" >
                                     <a href="<c:url value="/admin/home" />">Admin Home</a>
                                 </sec:authorize>
                                 <a href="<c:url value="/logout" />">Logout</a>

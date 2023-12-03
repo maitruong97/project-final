@@ -5,14 +5,21 @@
  */
 package com.mycompany.spring_mvc_project_final.configuration;
 
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.lang.NonNull;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -29,10 +36,10 @@ public class JPAConfig {
     @Bean
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3307/project_final?characterEncoding=UTF-8");
+            dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/projectfinal?characterEncoding=UTF-8");
         dataSource.setUsername("root");
-        dataSource.setPassword("admin");
+        dataSource.setPassword("123456");
 
         return dataSource;
     }
@@ -42,9 +49,7 @@ public class JPAConfig {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPackagesToScan(
-                new String[]{
-                    "com.mycompany.spring_mvc_project_final.entities"
-                });
+                new String[]{"com.mycompany.spring_mvc_project_final.entities"});
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
         entityManagerFactoryBean.setJpaProperties(additionalProperties());
@@ -54,6 +59,7 @@ public class JPAConfig {
 
     final Properties additionalProperties() {
         final Properties hibernateProperties = new Properties();
+//        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
         hibernateProperties.setProperty("hibernate.show_sql", "true");
@@ -80,8 +86,8 @@ public class JPAConfig {
         //Using gmail
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("loannguyen1501@gmail.com");
-        mailSender.setPassword("ooehxjdtqdxiqfmk");
+        mailSender.setUsername("maitruong02976@gmail.com");
+        mailSender.setPassword("amdlumesiyirnnjo");
 
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.smtp.starttls.enable", "true");
@@ -89,11 +95,10 @@ public class JPAConfig {
         javaMailProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         javaMailProperties.put("mail.debug", "true");
         javaMailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        
+
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;
 
     }
-    
-    
+
 }

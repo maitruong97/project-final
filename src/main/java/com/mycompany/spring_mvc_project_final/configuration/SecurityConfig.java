@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -45,19 +46,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/", "/login", "/logout", "/home").permitAll();
 
-        http.authorizeRequests().antMatchers("/user/*").access("hasAnyRole('ROLE_ADMIN,ROLE_USER')")
-                .antMatchers("/admin/*").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/admin/*").access("hasAnyRole('ROLE_ADMIN,ROLE_USER')")
+                .antMatchers("/user/*").access("hasRole('ROLE_USER')");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/j_spring_security_check")
                 .loginPage("/login")
-                .defaultSuccessUrl("/home") // page after login
+                .defaultSuccessUrl("/")
+//                .defaultSuccessUrl("/user/checkOut") // page after login
+//                .successHandler(myAuthenticationSuccessHandler())
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout().logoutUrl("/logout")
                 .logoutSuccessUrl("/home").deleteCookies("JSESSIONID");
     }
+
+//    @Bean
+//    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+//        return new MySimpleUrlAuthenticationSuccessHandler();
+//    }
 }

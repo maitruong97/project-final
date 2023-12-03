@@ -35,7 +35,10 @@
                 </div>
 
                 <input type="submit" class="btn" value="Sign in">
+                <h4 class="bg-info">Bạn chưa có tài khoản, đăng ký tại đây ===>  <button class="btn-info" type="button" onclick="location.href='register'">Sign Up</button></h4>
+
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
             </div>
         </form>
        

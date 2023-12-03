@@ -23,7 +23,7 @@ public class RoleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_USER;
@@ -31,11 +31,11 @@ public class RoleEntity implements Serializable {
     @ManyToMany(mappedBy = "userRoles")
     private Set<AccountEntity> users;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -54,5 +54,4 @@ public class RoleEntity implements Serializable {
     public void setUsers(Set<AccountEntity> users) {
         this.users = users;
     }
-
 }
